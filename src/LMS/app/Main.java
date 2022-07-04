@@ -59,22 +59,31 @@ public class Main {
 		print(deliveries);
 		
 	}
+	public static <T> java.util.List<T> filter(java.util.List<T> list, Matcher<? super T> m){
+		List<T> filtered = new LinkedList<>();
+		for(T t : list){
+			if(m.matches(t)){
+				filtered.add(t);
+			}
+		}
+		return filtered;
+	}
+	public static int export(java.util.Collection<Delivery> deliveries, String filename){
+		int n = 0;
+		try (BufferedWriter w = new BufferedWriter(new FileWriter(filename))){
+			for(Delivery d : deliveries){
+				w.write(d.toString());
+				w.newLine();
+				n++;
+			}
+		} catch (IOException e){
+			e.printStackTrace();
+		}
+		return n;
+	}
 
 	
 
-	/**
-	 * Prints deliveries line by line.<br>
-	 * <br>
-	 * Adds a short header before printing the String representation of all
-	 * deliveries line by line. For a single delivery the standard string
-	 * representation provided by Delivery.toString() is used.<br>
-	 * <br>
-	 * 
-	 * @param deliveries
-	 *                   the deliveries to print.
-	 * 
-	 * @ProgrammingProblem.Hint provided
-	 */
 	public static void print(Collection<Delivery> deliveries) {
 		System.out.println("\n--- Deliveries");
 		for (Delivery d : deliveries)
